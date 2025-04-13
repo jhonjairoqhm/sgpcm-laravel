@@ -1,64 +1,61 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Medico;
 use Illuminate\Http\Request;
 
 class MedicoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        $medicos = Medico::all();
+        return view('medicos.index', compact('medicos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('medicos.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'especialidad' => 'required',
+            'horarios' => 'required',
+            'telefono' => 'required',
+            'email' => 'required|email|unique:medicos,email',
+        ]);
+
+        Medico::create($request->all());
+        return redirect()->route('medicos.index')->with('success', 'Médico creado con éxito.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Medico $medico)
     {
-        //
+        return view('medicos.edit', compact('medico'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Medico $medico)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'especialidad' => 'required',
+            'horarios' => 'required',
+            'telefono' => 'required',
+            'email' => 'required|email|unique:medicos,email,' . $medico->id,
+        ]);
+
+        $medico->update($request->all());
+        return redirect()->route('medicos.index')->with('success', 'Médico actualizado correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Medico $medico)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $medico->delete();
+        return redirect()->route('medicos.index')->with('success', 'Médico eliminado.');
     }
 }

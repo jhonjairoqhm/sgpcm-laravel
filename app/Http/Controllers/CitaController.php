@@ -3,62 +3,64 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cita;
+use App\Models\Paciente;
+use App\Models\Medico;
 
 class CitaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        $citas = Cita::with(['paciente', 'medico'])->get();
+        return view('citas.index', compact('citas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $pacientes = Paciente::all();
+        $medicos = Medico::all();
+        return view('citas.create', compact('pacientes', 'medicos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'paciente_id' => 'required|exists:pacientes,id',
+            'medico_id' => 'required|exists:medicos,id',
+            'fecha_cita' => 'required|date',
+            'hora_cita' => 'required',
+            'motivo_consulta' => 'required|string',
+        ]);
+
+        Cita::create($request->all());
+        return redirect()->route('citas.index')->with('success', 'Cita creada con éxito.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Cita $cita)
     {
-        //
+        $pacientes = Paciente::all();
+        $medicos = Medico::all();
+        return view('citas.edit', compact('cita', 'pacientes', 'medicos'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Cita $cita)
     {
-        //
+        $request->validate([
+            'paciente_id' => 'required|exists:pacientes,id',
+            'medico_id' => 'required|exists:medicos,id',
+            'fecha_cita' => 'required|date',
+            'hora_cita' => 'required',
+            'motivo_consulta' => 'required|string',
+        ]);
+
+        $cita->update($request->all());
+        return redirect()->route('citas.index')->with('success', 'Cita actualizada correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Cita $cita)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $cita->delete();
+        return redirect()->route('citas.index')->with('success', 'Cita eliminada.');
     }
 }
