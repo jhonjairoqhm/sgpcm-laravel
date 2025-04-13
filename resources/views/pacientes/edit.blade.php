@@ -6,33 +6,58 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="p-6 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                     <form method="POST" action="{{ route('pacientes.update', $paciente->id) }}">
                         @csrf
                         @method('PUT')
 
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
-                            <input type="text" name="nombre" value="{{ old('nombre', $paciente->nombre) }}" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:bg-gray-900 dark:text-white" required>
+                        <div class="grid grid-cols-1 gap-6">
+                            <div class="flex flex-col">
+                                <label for="nombre" class="text-gray-700 dark:text-gray-300">{{ __('Nombre') }}</label>
+                                <input type="text" name="nombre" id="nombre" value="{{ old('nombre', $paciente->nombre) }}" class="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md" required>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <label for="apellido" class="text-gray-700 dark:text-gray-300">{{ __('Apellido') }}</label>
+                                <input type="text" name="apellido" id="apellido" value="{{ old('apellido', $paciente->apellido) }}" class="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md" required>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <label for="fecha_nacimiento" class="text-gray-700 dark:text-gray-300">{{ __('Fecha de Nacimiento') }}</label>
+                                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" value="{{ old('fecha_nacimiento', $paciente->fecha_nacimiento) }}" class="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md" required>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <label for="genero" class="text-gray-700 dark:text-gray-300">{{ __('Género') }}</label>
+                                <select name="genero" id="genero" class="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md" required>
+                                    <option value="masculino" {{ $paciente->genero == 'masculino' ? 'selected' : '' }}>{{ __('Masculino') }}</option>
+                                    <option value="femenino" {{ $paciente->genero == 'femenino' ? 'selected' : '' }}>{{ __('Femenino') }}</option>
+                                    <option value="otro" {{ $paciente->genero == 'otro' ? 'selected' : '' }}>{{ __('Otro') }}</option>
+                                </select>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <label for="direccion" class="text-gray-700 dark:text-gray-300">{{ __('Dirección') }}</label>
+                                <input type="text" name="direccion" id="direccion" value="{{ old('direccion', $paciente->direccion) }}" class="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md" required>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <label for="telefono" class="text-gray-700 dark:text-gray-300">{{ __('Teléfono') }}</label>
+                                <input type="text" name="telefono" id="telefono" value="{{ old('telefono', $paciente->telefono) }}" class="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md" required>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <label for="email" class="text-gray-700 dark:text-gray-300">{{ __('Email') }}</label>
+                                <input type="email" name="email" id="email" value="{{ old('email', $paciente->email) }}" class="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md" required>
+                            </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Edad</label>
-                            <input type="number" name="edad" value="{{ old('edad', $paciente->edad) }}" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:bg-gray-900 dark:text-white" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Dirección</label>
-                            <input type="text" name="direccion" value="{{ old('direccion', $paciente->direccion) }}" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:bg-gray-900 dark:text-white" required>
-                        </div>
-
-                        <div class="flex justify-end">
-                            <a href="{{ route('pacientes.index') }}" class="mr-4 text-sm text-gray-600 dark:text-gray-300 hover:underline">Cancelar</a>
-                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-                                Actualizar
-                            </button>
+                        <div class="mt-4">
+                            <x-button>
+                                {{ __('Actualizar Paciente') }}
+                            </x-button>
                         </div>
                     </form>
                 </div>
