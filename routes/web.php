@@ -19,8 +19,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Rutas para Pacientes
     Route::resource('pacientes', PacienteController::class);
+    
+    // Rutas para Médicos
     Route::resource('medicos', MedicoController::class);
+
+    // Rutas para Citas
     Route::resource('citas', CitaController::class);
 });
 
