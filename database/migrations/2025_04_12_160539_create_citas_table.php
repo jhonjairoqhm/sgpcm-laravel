@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('fecha_cita');
             $table->time('hora_cita');
             $table->string('motivo_consulta');
+            $table->text('observaciones')->nullable(); 
             $table->timestamps();
         });
     }

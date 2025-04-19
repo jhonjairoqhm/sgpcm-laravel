@@ -45,6 +45,13 @@
                             <p>{{ $paciente->email }}</p>
                         </div>
                     </div>
+
+                    <!-- Botón para volver -->
+                    <div class="mt-6">
+                        <a href="{{ route('pacientes.index') }}" class="inline-block px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-200">
+                            {{ __('Volver a la lista de pacientes') }}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

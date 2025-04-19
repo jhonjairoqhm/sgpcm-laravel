@@ -9,10 +9,14 @@ class Medico extends Model
 {
     use HasFactory;
 
-    // Especifica los atributos que son asignables masivamente
+    // Atributos que se pueden asignar masivamente
     protected $fillable = [
         'nombre',
+        'apellido',
         'especialidad',
+        'horarios',
+        'telefono',
+        'email',
     ];
 
     // Relación con el modelo Cita

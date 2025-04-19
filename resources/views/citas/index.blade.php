@@ -1,6 +1,20 @@
 <x-layout>
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <h1 class="text-2xl font-semibold text-white mb-6">Lista de Citas</h1>
+        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-6">Lista de Citas</h1>
+
+        <div class="mb-4 space-x-2">
+            <!-- Botón para regresar al Dashboard -->
+            <a href="{{ route('dashboard') }}" 
+               class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded">
+                Regresar al Dashboard
+            </a>
+
+            <!-- Botón para regresar a Pacientes -->
+            <a href="{{ route('pacientes.index') }}" 
+               class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded">
+                Regresar a Pacientes
+            </a>
+        </div>
 
         <div class="bg-gray-900 shadow-md rounded-lg p-6">
             <a href="{{ route('citas.create') }}" 
@@ -16,6 +30,7 @@
                         <th class="px-4 py-2">Fecha</th>
                         <th class="px-4 py-2">Hora</th>
                         <th class="px-4 py-2">Motivo</th>
+                        <th class="px-4 py-2">Observaciones</th> <!-- Nueva columna para Observaciones -->
                         <th class="px-4 py-2">Acciones</th>
                     </tr>
                 </thead>
@@ -27,6 +42,7 @@
                             <td class="px-4 py-2">{{ $cita->fecha_cita }}</td>
                             <td class="px-4 py-2">{{ $cita->hora_cita }}</td>
                             <td class="px-4 py-2">{{ $cita->motivo_consulta }}</td>
+                            <td class="px-4 py-2">{{ $cita->observaciones ?? 'Sin observaciones' }}</td> <!-- Mostrar Observaciones -->
                             <td class="px-4 py-2 space-x-2">
                                 <a href="{{ route('citas.show', $cita) }}" 
                                    class="bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded text-sm">
